@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Edit Page</title>
+</head>
+<body class="body-edit">
+    <div class="form-card-add-edit">
+        <div class="card-add-edit">
+            <div class="card-header-add-edit">
+                <h2>Edit To-Do</h2>
+            </div>
+            <div class="card-body-add-edit">
+                <form action="{{ url_for('edit', id=todo.id) }}" method="POST">
+                    <div>
+                        <label for="todo">Task:</label>
+                        <input type="text" name="todo" id="todo" value="{{ todo.task }}" required>
+                    </div>
+                    <div>
+                        <label for="due_date">Due Date:</label>
+                        <input type="date" name="due_date" id="due_date" value="{{ todo.due_date.strftime('%Y-%m-%d') if todo.due_date else '' }}">
+                    </div>
+                    <button type="submit" class="submit-button">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <title>Todo App TFC</title>
+</head>
+<body>
+    <div class="header">
+        <h1 class="main-page-title">TO-DO LIST APP</h1>
+        <a href="{{ url_for('logout') }}" class="logout-button">Logout</a>
+    </div>
+
+    <div class="form-card-add-edit">
+        <div class="card-add-edit">
+            <div class="card-header-add-edit">
+                <h2>Add New To-Do</h2>
+            </div>
+            <div class="card-body-add-edit">
+                <form action="{{ url_for('add') }}" method="POST">
+                    <div>
+                        <label for="todo">Task:</label>
+                        <input type="text" name="todo" id="todo" required>
+                    </div>
+                    <div>
+                        <label for="due_date">Due Date:</label>
+                        <input type="date" name="due_date" id="due_date" min="0001-01-01" max="9999-12-31">
+                    </div>
+                    <button type="submit" class="submit-button">Add To-Do</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <ul class="todo-list">
+        {% for todo in todos %}
+            <li class="todo-item">
+                <div class="card">
+                    <div class="card-body">
+                        <p><strong>Task:</strong> {{ todo.task }}</p>
+                        <p><strong>Due Date:</strong> {{ todo.due_date.strftime('%Y-%m-%d') if todo.due_date else 'No due date' }}</p>
+                        <p><strong>Status:</strong> {{ 'Done' if todo.done else 'Pending' }}</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{{ url_for('check', id=todo.id) }}" class="todo-links">Done</a>
+                        <a href="{{ url_for('edit', id=todo.id) }}" class="todo-links">Edit</a>
+                        <a href="{{ url_for('move_up', id=todo.id) }}" class="todo-links">Move Up</a>
+                        <a href="{{ url_for('move_down', id=todo.id) }}" class="todo-links">Move Down</a>
+                        <a href="{{ url_for('delete', id=todo.id) }}" class="todo-link-delete">Delete</a>
+                    </div>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+</html>
